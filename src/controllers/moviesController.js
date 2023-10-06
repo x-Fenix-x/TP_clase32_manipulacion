@@ -120,14 +120,38 @@ const moviesController = {
         });
     },
     destroy: function (req, res) {
-        db.Movie.destroy({
+        const { id } = req.params;
+
+        db.ActorMovie.destroy({
             where: {
-                id: req.params.id,
+                movie_id: id,
             },
-        }).then((movie) => {
-            console.log(movie);
-            return res.redirect('/movies');
-        });
+        })
+            .then((response) => {
+                console.log(response);
+
+                db.Actor.update(
+                    {
+                        favorite_movie_id: null,
+                    },
+                    {
+                        where: {
+                            favorite_movie_id: id,
+                        },
+                    }
+                ).then((response) => {
+                    console.log(response);
+                    db.Movie.destroy({
+                        where: {
+                            id,
+                        },
+                    }).then((movie) => {
+                        console.log(movie);
+                        return res.redirect('/movies');
+                    });
+                });
+            })
+            .catch((error) => console.log(error));
     },
 };
 
