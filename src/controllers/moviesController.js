@@ -55,10 +55,14 @@ const moviesController = {
                 return res.redirect('/movies');
             });
         } else {
-            return res.render('moviesAdd', {
-                errors: errors.mapped(),
-                old: req.body,
-            });
+            db.Movie.findAll(req.params.id)
+                .then((movie) => {
+                    return res.render('moviesEdit', {
+                        Movie: movie,
+                        genres,
+                    });
+                })
+                .catch((error) => console.log(error));
         }
     },
     edit: function (req, res) {
@@ -93,11 +97,7 @@ const moviesController = {
             )
                 .then((response) => {
                     console.log(response);
-                    db.Movie.findByPk(req.params.id).then((movie) => {
-                        return res.render('moviesDetail', {
-                            movie,
-                        });
-                    });
+                    return res.redirect('/movies/detail/' + req.params.id);
                 })
                 .catch((error) => console.log(error));
         } else {

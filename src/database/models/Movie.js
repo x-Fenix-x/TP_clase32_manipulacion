@@ -4,29 +4,29 @@ module.exports = (sequelize, dataTypes) => {
         id: {
             type: dataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
         title: {
-            type: dataTypes.STRING
+            type: dataTypes.STRING,
         },
         rating: {
-            type: dataTypes.INTEGER
+            type: dataTypes.INTEGER,
         },
         length: {
-            type: dataTypes.INTEGER
+            type: dataTypes.INTEGER,
         },
         awards: {
-            type: dataTypes.INTEGER
+            type: dataTypes.INTEGER,
         },
         release_date: {
-            type: dataTypes.DATE
-        }
+            type: dataTypes.DATE,
+        },
     };
     let config = {
         tableName: 'movies',
-        timestamps: false
+        timestamps: false,
     };
-    const Movie = sequelize.define(alias, cols, config)
+    const Movie = sequelize.define(alias, cols, config);
 
-    return Movie
-}
+    return Movie;
+};
